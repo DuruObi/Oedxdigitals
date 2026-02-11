@@ -53,3 +53,42 @@ function App() {
 }
 
 export default App;
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import Projects from "./pages/dashboard/Projects";
+import Profile from "./pages/dashboard/Profile";
+import Home from "./pages/Home";
+
+export default function App(){
+ return(
+ <AuthProvider>
+  <BrowserRouter>
+   <Routes>
+
+    <Route path="/" element={<Home/>}/>
+    <Route path="/login" element={<Login/>}/>
+    <Route path="/register" element={<Register/>}/>
+
+    <Route path="/dashboard" element={
+      <ProtectedRoute><DashboardHome/></ProtectedRoute>
+    }/>
+
+    <Route path="/projects" element={
+      <ProtectedRoute><Projects/></ProtectedRoute>
+    }/>
+
+    <Route path="/profile" element={
+      <ProtectedRoute><Profile/></ProtectedRoute>
+    }/>
+
+   </Routes>
+  </BrowserRouter>
+ </AuthProvider>
+ )
+}
